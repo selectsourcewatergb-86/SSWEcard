@@ -192,12 +192,18 @@ body{
   font-weight:800;
   font-size:14px;
   text-align:center;
+  cursor:pointer;
 }
 
 .btn.primary{
   background: linear-gradient(90deg, rgba(79,227,255,.95), rgba(99,255,178,.85));
   color:#021018;
   border:none;
+}
+
+/* Make "Save Contact" span full width on its row so it looks intentional */
+.btn.save{
+  grid-column: 1 / -1;
 }
 
 footer{
@@ -215,6 +221,7 @@ footer{
 @media(max-width:360px){
   .top{ flex-direction:column; align-items:flex-start; }
   .ctaRow{ grid-template-columns:1fr; }
+  .btn.save{ grid-column:auto; }
 }
 </style>
 </head>
@@ -227,7 +234,6 @@ footer{
 
     <section class="top">
       <div class="avatarWrap">
-        <!-- MUST be named profile.jpg -->
         <img class="avatar" src="profile.jpg" alt="Greg Buckner">
       </div>
 
@@ -252,7 +258,10 @@ footer{
       <a class="btn primary" href="tel:12097694750">Call</a>
       <a class="btn" href="sms:12097694750">Text</a>
       <a class="btn" href="mailto:Bucknergreg86@gmail.com">Email</a>
-      <a class="btn" href="https://selectsourcewater.com" target="_blank">Website</a>
+      <a class="btn" href="https://selectsourcewater.com" target="_blank" rel="noopener">Website</a>
+
+      <!-- Save Contact -->
+      <button class="btn save" id="saveContactBtn">Save Contact</button>
     </section>
 
     <footer>
@@ -262,6 +271,32 @@ footer{
 
   </main>
 </div>
+
+<script>
+  // Builds and downloads a .vcf contact card
+  const vcf = `BEGIN:VCARD
+VERSION:3.0
+N:Buckner;Greg;;;
+FN:Greg Buckner
+ORG:Select Source Water
+TITLE:Water Specialist
+TEL;TYPE=CELL: +1-209-769-4750
+EMAIL;TYPE=INTERNET:Bucknergreg86@gmail.com
+URL:https://selectsourcewater.com
+END:VCARD`;
+
+  document.getElementById("saveContactBtn").addEventListener("click", () => {
+    const blob = new Blob([vcf], { type: "text/vcard" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "Greg_Buckner_SelectSourceWater.vcf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+</script>
 
 </body>
 </html>
