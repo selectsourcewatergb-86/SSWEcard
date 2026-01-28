@@ -300,38 +300,47 @@
   width:100%;
   margin-top: -18px;
 }
-    
-  .hdBadge{
-    transform: translate(10px, -4px);
-    display:flex;
-    align-items:center;
-    gap:10px;
-    text-decoration:none;
-    color: var(--text);
-    border-radius: 16px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255,255,255,.18);
-    background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.35));
-    box-shadow: 0 12px 30px rgba(0,0,0,.35);
-    backdrop-filter: blur(10px);
-    max-width: 360px;
-    transition: transform .12s ease, filter .12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .hdBadge:hover{ transform: translateY(-1px); filter: brightness(1.05); }
-  .hdBadge:active{ transform: translateY(0px) scale(.995); }
+  
+    .hdBadge{
+  --bx: 10px;   /* move RIGHT = bigger number */
+  --by: -4px;   /* move UP = more negative */
+  transform: translate(var(--bx), var(--by));
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color: var(--text);
+  border-radius: 16px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.35));
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+  max-width: 360px;
+  transition: transform .12s ease, filter .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
 
+.hdBadge:hover{
+  transform: translate(var(--bx), calc(var(--by) - 1px));
+  filter: brightness(1.05);
+}
+
+.hdBadge:active{
+  transform: translate(var(--bx), var(--by)) scale(.995);
+}
+  
   /* Logo image (you upload home-depot-logo.png) */
   .hdLogo{
-    width:42px;
-    height:42px;
-    border-radius: 10px;
-    object-fit:cover;
-    flex: 0 0 auto;
-    box-shadow: 0 10px 22px rgba(0,0,0,.35);
-    background: rgba(0,0,0,.12);
-    border: 1px solid rgba(255,255,255,.14);
-  }
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  object-fit:cover;
+  flex: 0 0 auto;
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+  background: rgba(0,0,0,.12);
+  border: 1px solid rgba(255,255,255,.14);
+}
 
   .hdText{
     display:flex;
