@@ -184,6 +184,19 @@
       pointer-events:none;
     }
 
+    .hdWatermark{
+  margin-left: auto;
+  opacity: 0.25;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
+  display: flex;
+  align-items: center;
+}
+
+.hdWatermark img{
+  height: 42px;
+  width: auto;
+}
+
     .logoImg{
       width:100%;
       height:100%;
@@ -672,9 +685,13 @@
         </div>
 
         <div class="chipRow">
-          <div class="chip glow">Licensed • Installed • Supported</div>
-          <div class="chip">No-pressure consults</div>
-        </div>
+  <div class="chip glow">Licensed • Installed • Supported</div>
+  <div class="chip">No-pressure consults</div>
+
+  <div class="hdWatermark">
+    <img src="hd-watermark.png" alt="Home Depot Partner" />
+  </div>
+</div>
       </section>
 
       <div class="divider"></div>
