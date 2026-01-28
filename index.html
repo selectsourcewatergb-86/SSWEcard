@@ -29,41 +29,78 @@
     --maxW: 860px;
 
     --sheetRadius: 22px;
-    /* Home Depot promo badge (top-right above name) */
+    
+/* Home Depot badge — sleek “half bubble” (no double bubble) */
 .whoRow{
   display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:14px;
+  align-items:center;
+  gap:12px;
   width:100%;
 }
 
+.whoRow > div{
+  min-width:0;
+}
+
+/* Make name block take space, push badge to the right */
+.whoRow > div:first-child{
+  flex:1;
+}
+
 .hdBadge{
-  flex:0 0 auto;
-  display:block;
+  margin-left:auto;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   text-decoration:none;
   -webkit-tap-highlight-color:transparent;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.16);
-  background:rgba(0,0,0,.10);
-  box-shadow:0 14px 40px rgba(0,0,0,.35);
-  transition:transform .12s ease, filter .12s ease;
+
+  /* REMOVE the bulky outer bubble */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 999px;
+  padding: 6px; /* gives room for the half-bubble behind */
 }
 
-.hdBadge:hover{
-  transform: translateY(-1px);
-  filter: brightness(1.03);
+/* The “half-bubble” behind it */
+.hdBadge::before{
+  content:"";
+  position:absolute;
+  inset: 6px 0 6px 22px;   /* creates a “half” capsule feel */
+  border-radius:999px;
+  background: linear-gradient(90deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,.18)
+  );
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 14px 40px rgba(0,0,0,.28);
+  backdrop-filter: blur(10px);
+  pointer-events:none;
 }
 
-.hdBadge:active{
-  transform: translateY(0px) scale(.995);
-}
-
+/* The image itself */
 .hdBadge img{
+  position:relative;
+  z-index:1;
   display:block;
-  width:170px;
+  width: 140px;   /* smaller = cleaner on mobile */
   height:auto;
+
+  /* If the image has a box baked in, this keeps it tidy */
+  border-radius: 14px;
+}
+
+/* Tablet */
+@media (max-width:520px){
+  .hdBadge img{ width: 130px; }
+}
+
+/* Small phones */
+@media (max-width:380px){
+  .whoRow{ gap:10px; }
+  .hdBadge img{ width: 125px; }
 }
 
 /* Tablet */
@@ -758,8 +795,6 @@
 
   <div class="pulseLine" aria-hidden="true"></div>
 </div>
-        </div>
-      </section>
 
       <!-- Info -->
       <section class="info">
