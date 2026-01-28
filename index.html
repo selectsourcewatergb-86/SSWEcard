@@ -29,6 +29,53 @@
     --maxW: 860px;
 
     --sheetRadius: 22px;
+    /* Home Depot promo badge (top-right above name) */
+.whoRow{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  width:100%;
+}
+
+.hdBadge{
+  flex:0 0 auto;
+  display:block;
+  text-decoration:none;
+  -webkit-tap-highlight-color:transparent;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.10);
+  box-shadow:0 14px 40px rgba(0,0,0,.35);
+  transition:transform .12s ease, filter .12s ease;
+}
+
+.hdBadge:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.hdBadge:active{
+  transform: translateY(0px) scale(.995);
+}
+
+.hdBadge img{
+  display:block;
+  width:170px;
+  height:auto;
+}
+
+/* Tablet */
+@media (max-width:520px){
+  .hdBadge img{ width:150px; }
+}
+
+/* Phone */
+@media (max-width:380px){
+  .whoRow{ flex-direction:column; align-items:flex-start; }
+  .hdBadge img{ width:160px; }
+}
   }
 
   *{ box-sizing:border-box; }
@@ -691,9 +738,26 @@
         </div>
 
         <div class="who">
-          <h1 class="name">Greg Buckner</h1>
-          <div class="role">Water Specialist</div>
-          <div class="pulseLine" aria-hidden="true"></div>
+  <div class="whoRow">
+    <div>
+      <h1 class="name">Greg Buckner</h1>
+      <div class="role">Water Specialist</div>
+    </div>
+
+    <!-- Home Depot badge (clickable) -->
+    <a class="hdBadge"
+       href="https://calendar.app.google/GLxLpmB7KNzAm6zi6"
+       target="_blank"
+       rel="noopener"
+       aria-label="Free in-home water test paid for by Home Depot — book now">
+      <img src="homedepot-badge.png"
+           alt="Free In-Home Water Test — Paid for by Home Depot"
+           onerror="this.style.display='none';" />
+    </a>
+  </div>
+
+  <div class="pulseLine" aria-hidden="true"></div>
+</div>
         </div>
       </section>
 
