@@ -185,7 +185,7 @@
     }
 
     .hdWatermark{
-  margin-left: auto;
+  flex: 0 0 auto;
   filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
   display: flex;
   align-items: center;
@@ -234,11 +234,22 @@
     }
 
     .chipRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      justify-content:flex-end;
-    }
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:flex-end;
+  align-items:center;
+  min-width:0;
+  flex: 1 1 auto;
+}
+
+    .chipBar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+}
 
     .chip{
       font-size:12px;
@@ -684,11 +695,13 @@
           </div>
         </div>
 
-        <div class="chipRow">
-  <div class="chip glow">Licensed • Installed • Supported</div>
-  <div class="chip">No-pressure consults</div>
+        <div class="chipBar">
+  <div class="chipRow">
+    <div class="chip glow">Licensed • Installed • Supported</div>
+    <div class="chip">No-pressure consults</div>
+  </div>
 
-  <div class="hdWatermark">
+  <div class="hdWatermark" aria-hidden="true">
     <img src="hd-watermark.png" alt="Home Depot Partner" />
   </div>
 </div>
