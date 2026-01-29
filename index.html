@@ -157,14 +157,25 @@
 
 /* Anchor watermark image to top-right */
 .topZone .wm img{
-  position:absolute;
-  inset: 0px 6px 4px 6px; /* TOP RIGHT BOTTOM LEFT - tweak these */
-  width: auto;
+  position: absolute;
+
+  /* anchor to top-right */
+  top: 6px;
+  right: 10px;
+
+  /* control the size directly */
+  width: 180px;        /* start here */
   height: auto;
+
   object-fit: contain;
-  opacity: 0.22;
+  object-position: center;
+
+  opacity: 0.28;       /* keep your current value */
   transform: none;
-  filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
+  filter:
+    brightness(1.25)
+    contrast(1.15)
+    drop-shadow(0 0 18px rgba(255,255,255,0.22));
 }
 
 /* Everything inside topZone stays above watermark */
