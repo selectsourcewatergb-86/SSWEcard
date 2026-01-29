@@ -140,43 +140,45 @@
       background: rgba(255,255,255,.10);
       margin: 0 18px;
     }
-    
-/* Top zone = Brand + Hero area (the red square) */
-.topZone{
-  position: relative;
-  overflow: hidden; /* keeps watermark clean */
-}
 
-/* Watermark covers the whole top zone */
-.topZone .hdWatermark{
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  z-index: 0;
-}
+    /* ===== TOP ZONE (Brand + Hero) + Watermark ===== */
+    .topZone{
+      position: relative;
+      overflow: hidden;
+    }
 
-/* Perfect square watermark (never stretched) */
-.topZone .hdWatermark img{
-  width: min(92vw, 560px);
-  aspect-ratio: 1 / 1;     /* forces square */
-  object-fit: contain;     /* keeps logo undistorted */
-  opacity: 0.22;           /* increased visibility */
-  transform: rotate(-12deg);
-  filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
-}
-    
+    .topZone .wm{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .topZone .wm img{
+      width: min(92vw, 540px);
+      aspect-ratio: 1 / 1;     /* perfect square */
+      object-fit: contain;     /* never distort */
+      opacity: 0.22;
+      transform: rotate(-12deg);
+      filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
+    }
+
+    /* Everything inside topZone stays above watermark */
+    .topZone > *:not(.wm){
+      position: relative;
+      z-index: 1;
+    }
+
     /* Brand bar */
     .brandBar{
-  position: relative;              /* needed for absolute watermark */
-  padding: 14px 16px 12px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 10px;
-  overflow: hidden;                /* hides watermark overflow nicely */
-}
+      padding: 14px 16px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+    }
 
     .brandLeft{
       display:flex;
@@ -184,15 +186,6 @@
       gap:10px;
       min-width: 0;
     }
-
-.brandLeft,
-.chipBar,
-.chipRow,
-.brandText{
-.hero{
-  position: relative;
-  z-index: 1;
-}
 
     .logoBox{
       width:48px; height:48px;
@@ -220,24 +213,6 @@
       opacity:.9;
       pointer-events:none;
     }
-
-    .hdWatermark{
-  position: absolute;
-  inset: 0;                        /* fills the whole header */
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  z-index: 0;                      /* behind content */
-}
-
-.hdWatermark img{
-  width: min(560px, 96%);
-  aspect-ratio: 1 / 1;     /* perfect square */
-  object-fit: contain;     /* no distortion */
-  opacity: 0.22;           /* stronger */
-  transform: rotate(-12deg);
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.12));
-}
 
     .logoImg{
       width:100%;
@@ -275,23 +250,23 @@
       text-overflow:ellipsis;
     }
 
-    .chipRow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  justify-content:flex-end;
-  align-items:center;
-  min-width:0;
-  flex: 1 1 auto;
-}
-
     .chipBar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  width:100%;
-}
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:12px;
+      min-width:0;
+      flex: 1 1 auto;
+    }
+
+    .chipRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      justify-content:flex-end;
+      align-items:center;
+      min-width:0;
+    }
 
     .chip{
       font-size:12px;
@@ -687,31 +662,30 @@
     .sheetBtn svg{ width:18px; height:18px; fill: currentColor; }
 
     /* Responsive */
-@media (max-width: 520px){
-  .brandBar{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 8px 14px 8px;
-  }
+    @media (max-width: 520px){
+      .brandBar{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px 14px 8px;
+      }
+      .chipBar{
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .chipRow{
+        justify-content: flex-start;
+        gap: 6px;
+      }
+    }
 
-  .chipBar{
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .chipRow{
-    justify-content: flex-start;
-    gap: 6px;
-  }
-
-@media (max-width: 380px){
-  .hero{ flex-direction:column; align-items:flex-start; }
-  .actions{ grid-template-columns: 1fr; }
-  .btn.save, .btn.quote{ grid-column:auto; }
-  .quick{ right: 10px; bottom: 10px; }
-}
+    @media (max-width: 380px){
+      .hero{ flex-direction:column; align-items:flex-start; }
+      .actions{ grid-template-columns: 1fr; }
+      .btn.save, .btn.quote{ grid-column:auto; }
+      .quick{ right: 10px; bottom: 10px; }
+    }
 
     /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
@@ -739,49 +713,51 @@
   <div class="wrap">
     <main class="card">
 
-  <!-- Brand bar -->
-  <section class="brandBar">
-    <div class="hdWatermark" aria-hidden="true">
-    <img src="hd-watermark.png" alt="" />
-    </div>
-    
-    <div class="brandLeft">
-      <div class="logoBox" title="Select Source Water">
-        <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
-             onerror="this.onerror=null; this.src='logo.jpg';" />
-      </div>
-      <div class="brandText">
-        <div class="brandName">Select Source Water</div>
-        <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
-      </div>
-    </div>
+      <!-- TOP ZONE (Brand + Hero) -->
+      <div class="topZone">
+        <div class="wm" aria-hidden="true">
+          <img src="hd-watermark.png" alt="" />
+        </div>
 
-    <div class="chipBar">
-      <div class="chipRow">
-        <div class="chip glow">Licensed • Installed • Supported</div>
-        <div class="chip">No-pressure consults</div>
+        <!-- Brand bar -->
+        <section class="brandBar">
+          <div class="brandLeft">
+            <div class="logoBox" title="Select Source Water">
+              <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
+                   onerror="this.onerror=null; this.src='logo.jpg';" />
+            </div>
+            <div class="brandText">
+              <div class="brandName">Select Source Water</div>
+              <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
+            </div>
+          </div>
+
+          <div class="chipBar">
+            <div class="chipRow">
+              <div class="chip glow">Licensed • Installed • Supported</div>
+              <div class="chip">No-pressure consults</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Identity -->
+        <section class="hero">
+          <div class="avatarRing">
+            <div class="avatarWrap">
+              <img class="avatar" src="profile.jpg" alt="Greg Buckner"
+                   onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
+            </div>
+          </div>
+
+          <div class="who">
+            <h1 class="name">Greg Buckner</h1>
+            <div class="role">Water Specialist</div>
+            <div class="pulseLine" aria-hidden="true"></div>
+          </div>
+        </section>
       </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- Identity -->
-  <section class="hero">
-    <div class="avatarRing">
-      <div class="avatarWrap">
-        <img class="avatar" src="profile.jpg" alt="Greg Buckner"
-             onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
-      </div>
-    </div>
-
-    <div class="who">
-      <h1 class="name">Greg Buckner</h1>
-      <div class="role">Water Specialist</div>
-      <div class="pulseLine" aria-hidden="true"></div>
-    </div>
-  </section>
-</div>
 
       <!-- Info -->
       <section class="info">
