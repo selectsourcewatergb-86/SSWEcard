@@ -143,11 +143,13 @@
 
     /* Brand bar */
     .brandBar{
-  padding: 12px 16px 10px;
+  position: relative;              /* needed for absolute watermark */
+  padding: 14px 16px 12px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap: 10px; /* keep only one */
+  gap: 10px;
+  overflow: hidden;                /* hides watermark overflow nicely */
 }
 
     .brandLeft{
@@ -156,6 +158,14 @@
       gap:10px;
       min-width: 0;
     }
+
+    .brandLeft,
+.chipBar,
+.chipRow,
+.brandText{
+  position: relative;
+  z-index: 1;
+}
 
     .logoBox{
       width:48px; height:48px;
@@ -185,16 +195,20 @@
     }
 
     .hdWatermark{
-  flex: 0 0 auto;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
-  display: flex;
-  align-items: center;
+  position: absolute;
+  inset: 0;                        /* fills the whole header */
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;                      /* behind content */
 }
 
 .hdWatermark img{
-  height: 160px;
-  width: auto;
-  opacity: 0.22;
+  width: min(520px, 92%);          /* big */
+  height: auto;
+  opacity: 0.10;                   /* subtle */
+  transform: rotate(-12deg);       /* classic watermark vibe */
+  filter: drop-shadow(0 0 18px rgba(255,255,255,0.10));
 }
 
     .logoImg{
@@ -719,6 +733,11 @@
     <div class="chip glow">Licensed • Installed • Supported</div>
     <div class="chip">No-pressure consults</div>
   </div>
+</div>
+
+<div class="hdWatermark" aria-hidden="true">
+  <img src="hd-watermark.png" alt="" />
+</div>
 
   <div class="hdWatermark" aria-hidden="true">
     <img src="hd-watermark.png" alt="Home Depot Partner" />
