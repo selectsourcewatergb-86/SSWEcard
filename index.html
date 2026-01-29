@@ -140,7 +140,33 @@
       background: rgba(255,255,255,.10);
       margin: 0 18px;
     }
+    
+/* Top zone = Brand + Hero area (the red square) */
+.topZone{
+  position: relative;
+  overflow: hidden; /* keeps watermark clean */
+}
 
+/* Watermark covers the whole top zone */
+.topZone .hdWatermark{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Perfect square watermark (never stretched) */
+.topZone .hdWatermark img{
+  width: min(92vw, 560px);
+  aspect-ratio: 1 / 1;     /* forces square */
+  object-fit: contain;     /* keeps logo undistorted */
+  opacity: 0.22;           /* increased visibility */
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
+}
+    
     /* Brand bar */
     .brandBar{
   position: relative;              /* needed for absolute watermark */
@@ -159,10 +185,11 @@
       min-width: 0;
     }
 
-    .brandLeft,
+.brandLeft,
 .chipBar,
 .chipRow,
 .brandText{
+.hero{
   position: relative;
   z-index: 1;
 }
@@ -204,11 +231,12 @@
 }
 
 .hdWatermark img{
-  width: min(520px, 92%);          /* big */
-  height: auto;
-  opacity: 0.10;                   /* subtle */
-  transform: rotate(-12deg);       /* classic watermark vibe */
-  filter: drop-shadow(0 0 18px rgba(255,255,255,0.10));
+  width: min(560px, 96%);
+  aspect-ratio: 1 / 1;     /* perfect square */
+  object-fit: contain;     /* no distortion */
+  opacity: 0.22;           /* stronger */
+  transform: rotate(-12deg);
+  filter: drop-shadow(0 0 18px rgba(255,255,255,0.12));
 }
 
     .logoImg{
@@ -678,11 +706,6 @@
     gap: 6px;
   }
 
-  .hdWatermark img{
-    height: 120px; /* was 160px */
-  }
-}
-
 @media (max-width: 380px){
   .hero{ flex-direction:column; align-items:flex-start; }
   .actions{ grid-template-columns: 1fr; }
@@ -715,53 +738,50 @@
 
   <div class="wrap">
     <main class="card">
-      <!-- Brand bar -->
-      <section class="brandBar">
-        <div class="brandLeft">
-          <div class="logoBox" title="Select Source Water">
-            <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
-                 onerror="this.onerror=null; this.src='logo.jpg';" />
-          </div>
-          <div class="brandText">
-            <div class="brandName">Select Source Water</div>
-            <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
-          </div>
-        </div>
 
-        <div class="chipBar">
-  <div class="chipRow">
-    <div class="chip glow">Licensed • Installed • Supported</div>
-    <div class="chip">No-pressure consults</div>
-  </div>
+  <!-- Brand bar -->
+  <section class="brandBar">
+    <div class="hdWatermark" aria-hidden="true">
+    <img src="hd-watermark.png" alt="" />
+    </div>
+    
+    <div class="brandLeft">
+      <div class="logoBox" title="Select Source Water">
+        <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
+             onerror="this.onerror=null; this.src='logo.jpg';" />
+      </div>
+      <div class="brandText">
+        <div class="brandName">Select Source Water</div>
+        <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
+      </div>
+    </div>
+
+    <div class="chipBar">
+      <div class="chipRow">
+        <div class="chip glow">Licensed • Installed • Supported</div>
+        <div class="chip">No-pressure consults</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Identity -->
+  <section class="hero">
+    <div class="avatarRing">
+      <div class="avatarWrap">
+        <img class="avatar" src="profile.jpg" alt="Greg Buckner"
+             onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
+      </div>
+    </div>
+
+    <div class="who">
+      <h1 class="name">Greg Buckner</h1>
+      <div class="role">Water Specialist</div>
+      <div class="pulseLine" aria-hidden="true"></div>
+    </div>
+  </section>
 </div>
-
-<div class="hdWatermark" aria-hidden="true">
-  <img src="hd-watermark.png" alt="" />
-</div>
-
-  <div class="hdWatermark" aria-hidden="true">
-    <img src="hd-watermark.png" alt="Home Depot Partner" />
-  </div>
-</div>
-      </section>
-
-      <div class="divider"></div>
-
-      <!-- Identity -->
-      <section class="hero">
-        <div class="avatarRing">
-          <div class="avatarWrap">
-            <img class="avatar" src="profile.jpg" alt="Greg Buckner"
-                 onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
-          </div>
-        </div>
-
-        <div class="who">
-          <h1 class="name">Greg Buckner</h1>
-          <div class="role">Water Specialist</div>
-          <div class="pulseLine" aria-hidden="true"></div>
-        </div>
-      </section>
 
       <!-- Info -->
       <section class="info">
