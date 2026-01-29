@@ -148,16 +148,18 @@
     }
 
     .topZone .wm{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      pointer-events:none;
-      z-index:0;
-    }
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;   /* pushes it upward */
+  justify-content: flex-end; /* pushes it to the right */
+  pointer-events: none;
+  z-index: 0;
+  padding: 40px 24px 0 0;    /* fine positioning: top, right */
+}
 
     .topZone .wm img{
-      width: min(92vw, 540px);
+      width: 360px;
       aspect-ratio: 1 / 1;     /* perfect square */
       object-fit: contain;     /* never distort */
       opacity: 0.22;
