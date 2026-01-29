@@ -141,24 +141,57 @@
       margin: 0 18px;
     }
 
+    /* ===== TOP ZONE (Brand + Hero) + Watermark ===== */
+.topZone{
+  position: relative;
+  overflow: hidden;
+}
+
+/* Watermark layer */
+.topZone .wm{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Anchor watermark image to top-right */
+.topZone .wm img{
+  position:absolute;
+  top: -8px;          /* move UP by lowering this number */
+  right: -65px;        /* move RIGHT by lowering this number */
+  width: min(92vw, 540px);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  opacity: 0.22;
+  transform: rotate(0deg);
+  filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
+}
+
+/* Everything inside topZone stays above watermark */
+.topZone > *:not(.wm){
+  position: relative;
+  z-index: 1;
+}
+
     /* Brand bar */
     .brandBar{
-      padding: 18px 18px 14px;
+      padding: 14px 16px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap: 10px;
     }
 
     .brandLeft{
       display:flex;
       align-items:center;
-      gap:12px;
+      gap:10px;
       min-width: 0;
     }
 
     .logoBox{
-      width:52px; height:52px;
+      width:48px; height:48px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.16);
       background: rgba(0,0,0,.12);
@@ -183,19 +216,6 @@
       opacity:.9;
       pointer-events:none;
     }
-
-    .hdWatermark{
-  flex: 0 0 auto;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,0.15));
-  display: flex;
-  align-items: center;
-}
-
-.hdWatermark img{
-  height: 160px;
-  width: auto;
-  opacity: 0.22;
-}
 
     .logoImg{
       width:100%;
@@ -226,34 +246,34 @@
     }
 
     .brandTag{
-      font-size:12px;
+      font-size:11px;
       color: var(--muted);
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
 
-    .chipRow{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  justify-content:flex-end;
-  align-items:center;
-  min-width:0;
-  flex: 1 1 auto;
-}
-
     .chipBar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  width:100%;
-}
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:12px;
+      min-width:0;
+      flex: 1 1 auto;
+    }
+
+    .chipRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      justify-content:flex-end;
+      align-items:center;
+      min-width:0;
+    }
 
     .chip{
       font-size:12px;
-      padding:7px 10px;
+      padding:5px 10px;
       border-radius:999px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(0,0,0,.12);
@@ -646,8 +666,21 @@
 
     /* Responsive */
     @media (max-width: 520px){
-      .brandBar{ flex-direction:column; align-items:flex-start; }
-      .chipRow{ justify-content:flex-start; }
+      .brandBar{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 8px 14px 8px;
+      }
+      .chipBar{
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .chipRow{
+        justify-content: flex-start;
+        gap: 6px;
+      }
     }
 
     @media (max-width: 380px){
@@ -682,48 +715,52 @@
 
   <div class="wrap">
     <main class="card">
-      <!-- Brand bar -->
-      <section class="brandBar">
-        <div class="brandLeft">
-          <div class="logoBox" title="Select Source Water">
-            <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
-                 onerror="this.onerror=null; this.src='logo.jpg';" />
-          </div>
-          <div class="brandText">
-            <div class="brandName">Select Source Water</div>
-            <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
-          </div>
+
+      <!-- TOP ZONE (Brand + Hero) -->
+      <div class="topZone">
+        <div class="wm" aria-hidden="true">
+          <img src="hd-watermark.png" alt="" />
         </div>
 
-        <div class="chipBar">
-  <div class="chipRow">
-    <div class="chip glow">Licensed • Installed • Supported</div>
-    <div class="chip">No-pressure consults</div>
-  </div>
-
-  <div class="hdWatermark" aria-hidden="true">
-    <img src="hd-watermark.png" alt="Home Depot Partner" />
-  </div>
-</div>
-      </section>
-
-      <div class="divider"></div>
-
-      <!-- Identity -->
-      <section class="hero">
-        <div class="avatarRing">
-          <div class="avatarWrap">
-            <img class="avatar" src="profile.jpg" alt="Greg Buckner"
-                 onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
+        <!-- Brand bar -->
+        <section class="brandBar">
+          <div class="brandLeft">
+            <div class="logoBox" title="Select Source Water">
+              <img id="logoImg" class="logoImg" src="logo.png" alt="Select Source Water logo"
+                   onerror="this.onerror=null; this.src='logo.jpg';" />
+            </div>
+            <div class="brandText">
+              <div class="brandName">Select Source Water</div>
+              <div class="brandTag">Water Filtration • Softening • Reverse Osmosis</div>
+            </div>
           </div>
-        </div>
 
-        <div class="who">
-          <h1 class="name">Greg Buckner</h1>
-          <div class="role">Water Specialist</div>
-          <div class="pulseLine" aria-hidden="true"></div>
-        </div>
-      </section>
+          <div class="chipBar">
+            <div class="chipRow">
+              <div class="chip glow">Licensed • Installed • Supported</div>
+              <div class="chip">No-pressure consults</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Identity -->
+        <section class="hero">
+          <div class="avatarRing">
+            <div class="avatarWrap">
+              <img class="avatar" src="profile.jpg" alt="Greg Buckner"
+                   onerror="this.style.display='none'; this.parentElement.style.background='rgba(0,0,0,.18)';" />
+            </div>
+          </div>
+
+          <div class="who">
+            <h1 class="name">Greg Buckner</h1>
+            <div class="role">Water Specialist</div>
+            <div class="pulseLine" aria-hidden="true"></div>
+          </div>
+        </section>
+      </div>
 
       <!-- Info -->
       <section class="info">
