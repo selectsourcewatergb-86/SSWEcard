@@ -158,12 +158,13 @@
 /* Anchor watermark image to top-right */
 .topZone .wm img{
   position:absolute;
-  inset: 0px 6px 4px 6px; /* TOP RIGHT BOTTOM LEFT - tweak these */
-  width: auto;
-  height: auto;
+  top: -8px;          /* move UP by lowering this number */
+  right: -65px;        /* move RIGHT by lowering this number */
+  width: min(92vw, 540px);
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   opacity: 0.22;
-  transform: none;
+  transform: rotate(0deg);
   filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
 }
 
