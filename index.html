@@ -142,39 +142,43 @@
     }
 
     /* ===== TOP ZONE (Brand + Hero) + Watermark ===== */
+
 .topZone{
   position: relative;
   overflow: hidden;
 }
 
-/* Watermark layer */
+.wm { pointer-events: none; }
+
+/* Watermark container (full size of top zone) */
 .topZone .wm{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* Anchor watermark image to top-right */
+/* Watermark image — THIS controls size + placement */
 .topZone .wm img{
   position: absolute;
 
-  top: 2px;
-  right: -10px;
+  /* placement */
+  top: -8px;        /* move UP = more negative */
+  right: -35px;     /* move RIGHT = more negative */
 
-  width: 75%;
-  max-width: 520px;
+  /* size */
+  width: 140%;      /* THIS is your main size control */
   height: auto;
+  max-width: none;
+  max-height: none;
 
   object-fit: contain;
   object-position: center;
 
-  opacity: 0.28;
-  transform: none;
-  filter:
-    brightness(1.25)
-    contrast(1.15)
-    drop-shadow(0 0 18px rgba(255,255,255,0.22));
+  opacity: 0.28;    /* keep your current look */
+  transform: none;  /* no rotation */
+  filter: brightness(1.25) contrast(1.15);
+  pointer-events: none;
 }
 
 /* Everything inside topZone stays above watermark */
