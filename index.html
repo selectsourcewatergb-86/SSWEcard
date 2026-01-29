@@ -142,36 +142,37 @@
     }
 
     /* ===== TOP ZONE (Brand + Hero) + Watermark ===== */
-    .topZone{
-      position: relative;
-      overflow: hidden;
-    }
-
-    .topZone .wm{
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-start;   /* pushes it upward */
-  justify-content: flex-end; /* pushes it to the right */
-  pointer-events: none;
-  z-index: 0;
-  padding: 40px 24px 0 0;    /* fine positioning: top, right */
+.topZone{
+  position: relative;
+  overflow: hidden;
 }
 
-    .topZone .wm img{
-      width: 360px;
-      aspect-ratio: 1 / 1;     /* perfect square */
-      object-fit: contain;     /* never distort */
-      opacity: 0.22;
-      transform: rotate(0deg);
-      filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
-    }
+/* Watermark layer */
+.topZone .wm{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
 
-    /* Everything inside topZone stays above watermark */
-    .topZone > *:not(.wm){
-      position: relative;
-      z-index: 1;
-    }
+/* Anchor watermark image to top-right */
+.topZone .wm img{
+  position:absolute;
+  top: 10px;          /* move UP by lowering this number */
+  right: 16px;        /* move RIGHT by lowering this number */
+  width: min(92vw, 540px);
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  opacity: 0.22;
+  transform: rotate(0deg);
+  filter: drop-shadow(0 0 22px rgba(255,255,255,0.14));
+}
+
+/* Everything inside topZone stays above watermark */
+.topZone > *:not(.wm){
+  position: relative;
+  z-index: 1;
+}
 
     /* Brand bar */
     .brandBar{
