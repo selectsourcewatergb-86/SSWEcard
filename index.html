@@ -9,7 +9,6 @@
 
   <style>
     :root{
-      /* Select Source Water vibe (deep ocean + aqua + mint) */
       --bgA:#04151f;
       --bgB:#0a2f3f;
       --glass: rgba(255,255,255,.085);
@@ -142,50 +141,40 @@
     }
 
     /* ===== TOP ZONE (Brand + Hero) + Watermark ===== */
+    .topZone{
+      position: relative;
+      overflow: hidden;
+    }
 
-.topZone{
-  position: relative;
-  overflow: hidden;
-}
+    .wm{ pointer-events:none; }
 
-.wm { pointer-events: none; }
+    .topZone .wm{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+    }
 
-/* Watermark container (full size of top zone) */
-.topZone .wm{
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
+    .topZone .wm img{
+      position:absolute;
+      top: -79px;
+      right: -50px;
+      width: 128%;
+      height: auto;
+      max-width:none;
+      max-height:none;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0.28;
+      transform: none;
+      filter: brightness(1.25) contrast(1.15);
+      pointer-events: none;
+    }
 
-/* Watermark image — THIS controls size + placement */
-.topZone .wm img{
-  position: absolute;
-
-  /* placement */
-  top: -79px;        /* move UP = more negative */
-  right: -50px;     /* move RIGHT = more negative */
-
-  /* size */
-  width: 128%;      /* THIS is your main size control */
-  height: auto;
-  max-width: none;
-  max-height: none;
-
-  object-fit: contain;
-  object-position: center;
-
-  opacity: 0.28;    /* keep your current look */
-  transform: none;  /* no rotation */
-  filter: brightness(1.25) contrast(1.15);
-  pointer-events: none;
-}
-
-/* Everything inside topZone stays above watermark */
-.topZone > *:not(.wm){
-  position: relative;
-  z-index: 1;
-}
+    .topZone > *:not(.wm){
+      position:relative;
+      z-index:1;
+    }
 
     /* Brand bar */
     .brandBar{
@@ -216,7 +205,6 @@
       box-shadow: 0 16px 44px rgba(0,0,0,.35);
     }
 
-    /* Adaptive glow behind any logo (transparent or not) */
     .logoBox::before{
       content:"";
       position:absolute;
@@ -299,7 +287,7 @@
       color: rgba(236,246,255,.92);
     }
 
-    /* Identity block */
+    /* Identity */
     .hero{
       padding: 18px;
       display:flex;
@@ -515,9 +503,7 @@
       background: linear-gradient(90deg, rgba(79,227,255,.95), rgba(99,255,178,.85));
       box-shadow: 0 16px 40px rgba(79,227,255,.14);
     }
-    .btn.primary:hover{ filter: brightness(1.02); }
 
-    /* Main spotlight button */
     .btn.quote{
       grid-column: 1 / -1;
       border:none;
@@ -529,6 +515,13 @@
     .btn.save{
       grid-column: 1 / -1;
       background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(0,0,0,.14));
+    }
+
+    /* QR button */
+    .btn.qr{
+      grid-column: 1 / -1;
+      border: 1px solid rgba(255,255,255,.16);
+      background: linear-gradient(90deg, rgba(0,0,0,.14), rgba(255,255,255,.08));
     }
 
     footer{
@@ -575,7 +568,7 @@
     .qbtn:active{ transform: scale(.98); }
     .qbtn svg{ width:20px; height:20px; fill: currentColor; }
 
-    /* Bottom-sheet modal */
+    /* Bottom-sheet modal base */
     .overlay{
       position:fixed;
       inset:0;
@@ -677,6 +670,43 @@
     }
     .sheetBtn svg{ width:18px; height:18px; fill: currentColor; }
 
+    /* QR modal content */
+    .qrFrame{
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      padding: 14px;
+      display:grid;
+      place-items:center;
+      gap:12px;
+    }
+
+    #qrCanvas{
+      width: 260px;
+      height: 260px;
+      border-radius: 14px;
+      background: #fff;
+      padding: 10px;
+      display:block;
+    }
+
+    .qrCaption{
+      text-align:center;
+      color: rgba(236,246,255,.92);
+      font-weight: 900;
+    }
+
+    .qrUrl{
+      text-align:center;
+      color: rgba(236,246,255,.65);
+      font-size: 12px;
+      word-break: break-all;
+    }
+
+    /* Force QR overlay above everything */
+    #qrOverlay{ z-index: 9998 !important; }
+    #qrSheet{ z-index: 9999 !important; }
+
     /* Responsive */
     @media (max-width: 520px){
       .brandBar{
@@ -703,7 +733,6 @@
       .quick{ right: 10px; bottom: 10px; }
     }
 
-    /* Reduce motion */
     @media (prefers-reduced-motion: reduce){
       .waterGlow, .bubble, .pulseLine::after, .card::before{ animation:none !important; }
       .sheet, .overlay{ transition:none !important; }
@@ -729,13 +758,12 @@
   <div class="wrap">
     <main class="card">
 
-      <!-- TOP ZONE (Brand + Hero) -->
+      <!-- TOP ZONE -->
       <div class="topZone">
         <div class="wm" aria-hidden="true">
           <img src="hd-watermark.png" alt="" />
         </div>
 
-        <!-- Brand bar -->
         <section class="brandBar">
           <div class="brandLeft">
             <div class="logoBox" title="Select Source Water">
@@ -758,7 +786,6 @@
 
         <div class="divider"></div>
 
-        <!-- Identity -->
         <section class="hero">
           <div class="avatarRing">
             <div class="avatarWrap">
@@ -799,7 +826,7 @@
 
         <div class="tile">
           <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm6.9 9h-2.2c-.1-2-.7-3.9-1.7-5.4 1.9 1 3.3 3 3.9 5.4zM12 4.1c1.3 1.6 2.1 3.9 2.2 6H9.8c.1-2.1.9-4.4 2.2-6zM4.1 13h2.2c.1 2 .7 3.9 1.7 5.4-1.9-1-3.3-3-3.9-5.4zM6.3 11H4.1c.6-2.4 2-4.4 3.9-5.4-1 1.5-1.6 3.4-1.7 5.4zM12 19.9c-1.3-1.6-2.1-3.9-2.2-6h4.4c-.1 2.1-.9 4.4-2.2 6zm3.9-1.5c1-1.5 1.6-3.4 1.7-5.4h2.2c-.6 2.4-2 4.4-3.9 5.4z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm6.9 9h-2.2c-.1-2-.7-3.9-1.7-5.4 1.9 1 3.3 3 3.9 5.4zM12 4.1c1.3 1.6 2.1 3.9 2.2 6H9.8c.1-2.1.9-4.4 2.2-6zM4.1 13h2.2c.1 2 .7 3.9 1.7 5.4-1.9-1-3.3-3-3.9-5.4zM6.3 11H4.1c.6-2.4 2-4.4 3.9-5.4-1 1.5-1.6 3.4-1.7 5.4zM12 19.9c-1.3-1.6-2.1-3.9-2.2-6h4.4c-.1 2.1-.9 4.4-2.2 6zm3.9-1.5c1-1.5 1.6-3.4 1.7-5.4h2.2c-.6 2.4-2-4.4-3.9-5.4z"/></svg>
           </div>
           <div class="tileText">
             <div class="label">Website</div>
@@ -810,10 +837,8 @@
 
       <!-- Actions -->
       <section class="actions" id="actions">
-        <a class="btn quote" id="quoteBtn" href="https://calendar.app.google/GLxLpmB7KNzAm6zi6" target="_blank" rel="noopener" aria-label="Book a free water test">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2 2 7l10 5 10-5-10-5zm0 8L2 5v12l10 5 10-5V5l-10 5zm0 10-8-4V8l8 4 8-4v8l-8 4z"/>
-          </svg>
+        <a class="btn quote" href="https://calendar.app.google/GLxLpmB7KNzAm6zi6" target="_blank" rel="noopener" aria-label="Book a free water test">
+          <svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zm0 8L2 5v12l10 5 10-5V5l-10 5zm0 10-8-4V8l8 4 8-4v8l-8 4z"/></svg>
           Book a Free Water Test
         </a>
 
@@ -841,6 +866,11 @@
           <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zM12 19c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm3-10H5V5h10v4z"/></svg>
           Save Contact
         </button>
+
+        <button class="btn qr" id="qrPopupBtn" type="button" aria-label="Show QR code">
+          <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm10 0h2v2h-2v-2zm-2-2h4v4h-4v-4zm6 0h2v2h-2v-2zm0 4h2v4h-2v-4zm-4 2h2v2h-2v-2zm2 2h4v2h-4v-2z"/></svg>
+          Show QR
+        </button>
       </section>
 
       <footer>
@@ -856,7 +886,7 @@
       <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.7 3.1 3.5 4.9 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.9.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.1 21 3 13.9 3 5c0-.6.4-1 1-1h3.3c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.9.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
     </a>
     <a class="qbtn" href="sms:12097694750" aria-label="Quick text">
-      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2z"/></svg>
     </a>
   </div>
 
@@ -881,9 +911,35 @@
         </a>
 
         <a class="sheetBtn" id="sheetText" href="sms:12097694750" aria-label="Text Greg">
-          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2z"/></svg>
           Text Instead
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR modal (separate overlay, above everything) -->
+  <div class="overlay" id="qrOverlay" aria-hidden="true"></div>
+
+  <div class="sheet" id="qrSheet" role="dialog" aria-modal="true" aria-label="QR Code">
+    <div class="sheetCard">
+      <div class="grab" aria-hidden="true"></div>
+      <div class="sheetTop">
+        <div>
+          <div class="sheetTitle">Scan My Card</div>
+          <div class="sheetSub">Point your camera at the code</div>
+        </div>
+        <button class="xbtn" id="qrCloseBtn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="sheetBody">
+        <div class="qrFrame">
+          <canvas id="qrCanvas" aria-label="QR Code"></canvas>
+          <div class="qrCaption">Scan to open this eCard</div>
+          <div class="qrUrl" id="qrUrl"></div>
+        </div>
+
+        <button class="sheetBtn primary" id="qrDownloadBtn" type="button">Download QR</button>
       </div>
     </div>
   </div>
@@ -913,22 +969,24 @@ END:VCARD`;
     }
 
     const saveBtn = document.getElementById("saveContactBtn");
-    saveBtn.addEventListener("click", () => {
-      const vcf = buildVCF();
-      const blob = new Blob([vcf], { type: "text/vcard" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = VCF_FILENAME;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+    if (saveBtn){
+      saveBtn.addEventListener("click", () => {
+        const vcf = buildVCF();
+        const blob = new Blob([vcf], { type: "text/vcard" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = VCF_FILENAME;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
 
-      const old = saveBtn.innerHTML;
-      saveBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Saved`;
-      setTimeout(()=> saveBtn.innerHTML = old, 1200);
-    });
+        const old = saveBtn.innerHTML;
+        saveBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Saved`;
+        setTimeout(()=> saveBtn.innerHTML = old, 1200);
+      });
+    }
 
     // ====== Smart Phone Chooser (bottom-sheet) ======
     const overlay = document.getElementById("overlay");
@@ -937,6 +995,7 @@ END:VCARD`;
     const closeSheetBtn = document.getElementById("closeSheetBtn");
 
     function openSheet(){
+      if (!overlay || !sheet) return;
       overlay.classList.add("open");
       sheet.classList.add("open");
       overlay.setAttribute("aria-hidden", "false");
@@ -944,19 +1003,86 @@ END:VCARD`;
     }
 
     function closeSheet(){
+      if (!overlay || !sheet) return;
       overlay.classList.remove("open");
       sheet.classList.remove("open");
       overlay.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
     }
 
-    phoneTile.addEventListener("click", openSheet);
-    overlay.addEventListener("click", closeSheet);
-    closeSheetBtn.addEventListener("click", closeSheet);
+    if (phoneTile) phoneTile.addEventListener("click", openSheet);
+    if (overlay) overlay.addEventListener("click", closeSheet);
+    if (closeSheetBtn) closeSheetBtn.addEventListener("click", closeSheet);
+
+    // ====== QR Popup (separate overlay) ======
+    const qrPopupBtn = document.getElementById("qrPopupBtn");
+    const qrOverlay = document.getElementById("qrOverlay");
+    const qrSheet = document.getElementById("qrSheet");
+    const qrCloseBtn = document.getElementById("qrCloseBtn");
+    const qrUrlEl = document.getElementById("qrUrl");
+    const qrCanvas = document.getElementById("qrCanvas");
+    const qrDownloadBtn = document.getElementById("qrDownloadBtn");
+
+    function openQR(){
+      if (!qrOverlay || !qrSheet || !qrUrlEl || !qrCanvas) return;
+
+      const url = window.location.href.split("#")[0];
+      qrUrlEl.textContent = url;
+
+      qrOverlay.classList.add("open");
+      qrSheet.classList.add("open");
+      qrOverlay.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      const qrModel = QR(url, "M");
+      drawQR(qrCanvas, qrModel, { scale: 6, quiet: 4, bg:"#ffffff", fg:"#000000", rounded:false });
+    }
+
+    function closeQR(){
+      if (!qrOverlay || !qrSheet) return;
+      qrOverlay.classList.remove("open");
+      qrSheet.classList.remove("open");
+      qrOverlay.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    if (qrPopupBtn) qrPopupBtn.addEventListener("click", openQR);
+
+    // Only close when tapping the dark overlay (not the sheet)
+    if (qrOverlay){
+      qrOverlay.addEventListener("click", (e) => {
+        if (e.target === qrOverlay) closeQR();
+      });
+    }
+
+    if (qrCloseBtn) qrCloseBtn.addEventListener("click", closeQR);
 
     document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape") closeSheet();
+      if (e.key === "Escape"){
+        closeSheet();
+        if (qrSheet && qrSheet.classList.contains("open")) closeQR();
+      }
     });
+
+    if (qrDownloadBtn){
+      qrDownloadBtn.addEventListener("click", () => {
+        const url = window.location.href.split("#")[0];
+        downloadQR(url);
+      });
+    }
+
+    function downloadQR(url){
+      const temp = document.createElement("canvas");
+      const qrModel = QR(url, "M");
+      drawQR(temp, qrModel, { scale: 8, quiet: 4, bg:"#ffffff", fg:"#000000", rounded:false });
+
+      const a = document.createElement("a");
+      a.href = temp.toDataURL("image/png");
+      a.download = `${FULL_NAME.replace(/\s+/g,'_')}_QR.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
 
     // ====== Auto-hide floating quick buttons when main actions are visible ======
     const quick = document.getElementById("quick");
@@ -973,6 +1099,237 @@ END:VCARD`;
       }, { threshold: [0, 0.08, 0.2] });
 
       io.observe(actions);
+    }
+
+    // ============================================================
+    // QR engine (compact, local; no CDN)
+    // ============================================================
+    function QR(text, ecc){
+      const levels = { L:1, M:0, Q:3, H:2 };
+      const ec = levels[ecc || "M"] ?? 0;
+
+      for (let v=3; v<=10; v++){
+        try{
+          const m = QRCodeModel(v, ec);
+          m.addData(text);
+          m.make();
+          return m;
+        }catch(e){}
+      }
+      const m = QRCodeModel(10, ec);
+      m.addData(text);
+      m.make();
+      return m;
+    }
+
+    function drawQR(canvas, qrModel, opts){
+      const ctx = canvas.getContext("2d");
+      const count = qrModel.getModuleCount();
+      const quiet = opts.quiet ?? 4;
+      const scale = opts.scale ?? 6;
+      const size = (count + quiet*2) * scale;
+
+      canvas.width = size;
+      canvas.height = size;
+
+      ctx.fillStyle = opts.bg ?? "#ffffff";
+      ctx.fillRect(0,0,size,size);
+
+      ctx.fillStyle = opts.fg ?? "#000000";
+
+      for (let r=0; r<count; r++){
+        for (let c=0; c<count; c++){
+          if (qrModel.isDark(r,c)){
+            const x = (c+quiet)*scale;
+            const y = (r+quiet)*scale;
+
+            if (opts.rounded){
+              const rad = Math.max(1, Math.floor(scale * 0.35));
+              roundRect(ctx, x, y, scale, scale, rad);
+              ctx.fill();
+            } else {
+              ctx.fillRect(x,y,scale,scale);
+            }
+          }
+        }
+      }
+    }
+
+    function roundRect(ctx, x, y, w, h, r){
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.arcTo(x+w, y, x+w, y+h, r);
+      ctx.arcTo(x+w, y+h, x, y+h, r);
+      ctx.arcTo(x, y+h, x, y, r);
+      ctx.arcTo(x, y, x+w, y, r);
+      ctx.closePath();
+    }
+
+    function QRCodeModel(typeNumber, errorCorrectLevel){
+      const PAD0 = 0xEC, PAD1 = 0x11;
+
+      const qr = {
+        typeNumber,
+        errorCorrectLevel,
+        modules: null,
+        moduleCount: 0,
+        dataCache: null,
+        dataList: [],
+        addData(data){ this.dataList.push(QR8bitByte(data)); this.dataCache = null; },
+        isDark(r,c){ return this.modules[r][c]; },
+        getModuleCount(){ return this.moduleCount; },
+        make(){
+          this.moduleCount = this.typeNumber * 4 + 17;
+          this.modules = Array.from({length:this.moduleCount}, () => Array(this.moduleCount).fill(null));
+
+          setupPositionProbePattern(this, 0, 0);
+          setupPositionProbePattern(this, this.moduleCount - 7, 0);
+          setupPositionProbePattern(this, 0, this.moduleCount - 7);
+          setupTimingPattern(this);
+          setupTypeInfo(this, this.errorCorrectLevel, 0);
+
+          if (this.dataCache == null) this.dataCache = createData(this.typeNumber, this.errorCorrectLevel, this.dataList);
+          mapData(this, this.dataCache, 0);
+        }
+      };
+
+      function QR8bitByte(data){
+        const bytes = [];
+        for (let i=0; i<data.length; i++) bytes.push(data.charCodeAt(i));
+        return {
+          getLength(){ return bytes.length; },
+          write(buffer){ for (let i=0; i<bytes.length; i++) buffer.put(bytes[i], 8); }
+        };
+      }
+
+      function QRBitBuffer(){
+        return {
+          buffer: [],
+          length: 0,
+          put(num, len){
+            for (let i=0; i<len; i++) this.putBit(((num >>> (len - i - 1)) & 1) === 1);
+          },
+          putBit(bit){
+            const idx = Math.floor(this.length / 8);
+            if (this.buffer.length <= idx) this.buffer.push(0);
+            if (bit) this.buffer[idx] |= (0x80 >>> (this.length % 8));
+            this.length++;
+          }
+        };
+      }
+
+      function setupPositionProbePattern(qr, row, col){
+        for (let r=-1; r<=7; r++){
+          if (row+r <= -1 || qr.moduleCount <= row+r) continue;
+          for (let c=-1; c<=7; c++){
+            if (col+c <= -1 || qr.moduleCount <= col+c) continue;
+            if ((0 <= r && r <= 6 && (c === 0 || c === 6)) ||
+                (0 <= c && c <= 6 && (r === 0 || r === 6)) ||
+                (2 <= r && r <= 4 && 2 <= c && c <= 4)){
+              qr.modules[row+r][col+c] = true;
+            } else {
+              qr.modules[row+r][col+c] = false;
+            }
+          }
+        }
+      }
+
+      function setupTimingPattern(qr){
+        for (let i=8; i<qr.moduleCount-8; i++){
+          if (qr.modules[i][6] === null) qr.modules[i][6] = (i % 2 === 0);
+          if (qr.modules[6][i] === null) qr.modules[6][i] = (i % 2 === 0);
+        }
+      }
+
+      function setupTypeInfo(qr, errorCorrectLevel, maskPattern){
+        const data = (errorCorrectLevel << 3) | maskPattern;
+        const bits = getBCHTypeInfo(data);
+        for (let i=0; i<15; i++){
+          const mod = ((bits >> i) & 1) === 1;
+          if (i < 6) qr.modules[i][8] = mod;
+          else if (i < 8) qr.modules[i + 1][8] = mod;
+          else qr.modules[qr.moduleCount - 15 + i][8] = mod;
+
+          if (i < 8) qr.modules[8][qr.moduleCount - i - 1] = mod;
+          else if (i < 9) qr.modules[8][15 - i - 1 + 1] = mod;
+          else qr.modules[8][15 - i - 1] = mod;
+        }
+        qr.modules[qr.moduleCount - 8][8] = true;
+      }
+
+      function getBCHTypeInfo(data){
+        let d = data << 10;
+        while (getBCHDigit(d) - getBCHDigit(0x537) >= 0){
+          d ^= (0x537 << (getBCHDigit(d) - getBCHDigit(0x537)));
+        }
+        return ((data << 10) | d) ^ 0x5412;
+      }
+      function getBCHDigit(data){
+        let digit = 0;
+        while (data !== 0){ digit++; data >>>= 1; }
+        return digit;
+      }
+
+      function createData(typeNumber, errorCorrectLevel, dataList){
+        const buffer = QRBitBuffer();
+
+        for (let i=0; i<dataList.length; i++){
+          const data = dataList[i];
+          buffer.put(0x4, 4); // byte mode
+          buffer.put(data.getLength(), typeNumber < 10 ? 8 : 16);
+          data.write(buffer);
+        }
+
+        // approx capacity for our version range (good enough for URLs)
+        const approxDataBytes = (typeNumber < 10) ? 120 : 200;
+
+        if (buffer.length + 4 <= approxDataBytes * 8) buffer.put(0, 4);
+        while (buffer.length % 8 !== 0) buffer.putBit(false);
+
+        while (buffer.buffer.length < approxDataBytes){
+          buffer.put(PAD0, 8);
+          if (buffer.buffer.length >= approxDataBytes) break;
+          buffer.put(PAD1, 8);
+        }
+        return buffer.buffer;
+      }
+
+      function mapData(qr, data, maskPattern){
+        let inc = -1;
+        let row = qr.moduleCount - 1;
+        let bitIndex = 7;
+        let byteIndex = 0;
+
+        for (let col = qr.moduleCount - 1; col > 0; col -= 2){
+          if (col === 6) col--;
+          while (true){
+            for (let c=0; c<2; c++){
+              if (qr.modules[row][col - c] === null){
+                let dark = false;
+                if (byteIndex < data.length){
+                  dark = (((data[byteIndex] >>> bitIndex) & 1) === 1);
+                }
+                const mask = ((row + col) % 2 === 0);
+                qr.modules[row][col - c] = mask ? !dark : dark;
+
+                bitIndex--;
+                if (bitIndex === -1){
+                  byteIndex++;
+                  bitIndex = 7;
+                }
+              }
+            }
+            row += inc;
+            if (row < 0 || qr.moduleCount <= row){
+              row -= inc;
+              inc = -inc;
+              break;
+            }
+          }
+        }
+      }
+
+      return qr;
     }
   </script>
 </body>
